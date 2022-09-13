@@ -3,11 +3,13 @@ Option Explicit
 
 Sub AddToShortCut()
 '   Adds a menu item to the Cell shortcut menu
-    Dim Bar As CommandBar
+    Dim Bar1 As CommandBar
+    Dim Bar2 As CommandBar'Bar2 for table
     Dim NewControl As CommandBarButton
     DeleteFromShortcut
-    Set Bar = CommandBars("Cell")
-    Set NewControl = Bar.Controls.Add _
+    Set Bar1 = CommandBars("Cell")
+    Set Bar2 = CommandBars("List Range Popup")
+    Set NewControl = Bar1.Controls.Add _
         (Type:=msoControlButton, ID:=1, _
          temporary:=True)
     With NewControl
@@ -16,6 +18,17 @@ Sub AddToShortCut()
         .Picture = Application.CommandBars.GetImageMso("WrapText", 16, 16)
         .Style = msoButtonIconAndCaption
     End With
+
+    Set NewControl = Bar2.Controls.Add _
+        (Type:=msoControlButton, ID:=1, _
+         temporary:=True)
+    With NewControl
+        .Caption = "Toggle &Word Wrap"
+        .OnAction = "ToggleWordWrap"
+        .Picture = Application.CommandBars.GetImageMso("WrapText", 16, 16)
+        .Style = msoButtonIconAndCaption
+    End With
+
 End Sub
 
 Sub ToggleWordWrap()
